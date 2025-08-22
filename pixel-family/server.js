@@ -1,25 +1,32 @@
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-const canvasSize = 128;
-const canvasState = Array(canvasSize).fill(0).map(()=>Array(canvasSize).fill("#FFFFFF"));
+// Serve static files from public
+app.use(express.static("public"));
 
-app.use(express.static('public'));
+// Canvas setup
+const canvasSize = 80;
+let canvasState = Array(canvasSize).fill(0).map(() => Array(canvasSize).fill("#FFFFFF"));
 
-io.on('connection', socket => {
+// Socket.IO
+io.on("connection", socket => {
   console.log("New client connected");
 
-  socket.emit('initCanvas', canvasState);
+  // send initial canvas
+  socket.emit("initCanvas", canvasState);
 
-  socket.on('pixelChange', ({x, y, color}) => {
+  // listen for pixel changes
+  socket.on("pixelChange", ({ x, y, color }) => {
     canvasState[y][x] = color;
-    socket.broadcast.emit('pixelChange', {x, y, color});
+    socket.broadcast.emit("pixelChange", { x, y, color });
   });
 });
 
-server.listen(3000, () => console.log("Server running on http://localhost:3000"));
+// Start server
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
