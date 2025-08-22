@@ -1,0 +1,33 @@
+body { text-align: center; font-family: sans-serif; }
+#canvas-container {
+  width: 90vw;
+  height: 90vh;
+  margin: auto;
+  border: 2px solid #333;
+  overflow: hidden;
+  position: relative;
+}
+#canvas {
+  position: absolute;
+  top: 0;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><line x1="0" y1="16" x2="16" y2="0" stroke="black" stroke-width="2"/></svg>') 0 16, crosshair;
+  left: 0;
+  cursor: grab;
+    transform-origin: 0 0; /* critical for zoom from cursor */
+}
+#canvas:active {
+  cursor: grabbing;
+}
+#color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+  gap: 2px;
+}
+#color-picker button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  cursor: pointer;
+}
