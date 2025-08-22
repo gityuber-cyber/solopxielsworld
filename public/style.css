@@ -1,33 +1,58 @@
-body { text-align: center; font-family: sans-serif; }
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+  background-color: #222;
+  color: #fff;
+}
+
 #canvas-container {
-  width: 90vw;
+  width: 100vw;
   height: 90vh;
-  margin: auto;
-  border: 2px solid #333;
   overflow: hidden;
   position: relative;
 }
-#canvas {
-  position: absolute;
-  top: 0;
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><line x1="0" y1="16" x2="16" y2="0" stroke="black" stroke-width="2"/></svg>') 0 16, crosshair;
-  left: 0;
+
+canvas {
+  display: block;
   cursor: grab;
-    transform-origin: 0 0; /* critical for zoom from cursor */
+  background-color: #fff;
 }
-#canvas:active {
-  cursor: grabbing;
-}
+
 #color-picker {
+  position: fixed;
+  bottom: 0;                  /* stick to bottom */
+  left: 0;
+  width: 100vw;               /* full width */
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 10px;
-  gap: 2px;
+  justify-content: center;    /* center the buttons */
+  gap: 5px;
+  background: rgba(0,0,0,0.8);
+  padding: 10px 0;
+  z-index: 9999;
+  overflow-x: auto;           /* scroll if too many colors */
 }
+
 #color-picker button {
-  width: 20px;
-  height: 20px;
-  border: none;
   cursor: pointer;
+  border: 1px solid #444;
+  width: 50px;  
+  height: 50px; 
+  border-radius: 6px;
+  flex: 0 0 auto;             /* prevent shrinking */
 }
+#tutorial {
+  position: fixed;
+  bottom: 10px;      /* 10px from bottom */
+  left: 10px;        /* 10px from left */
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: monospace;
+  z-index: 9999;
+  pointer-events: none; /* so it doesn’t block canvas clicks */
+}
+
